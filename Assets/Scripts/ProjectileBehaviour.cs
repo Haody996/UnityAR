@@ -10,6 +10,7 @@ namespace MyFirstARGame
     {
         [SerializeField]
         private Material[] projectileMaterials;
+				public int playerId;
 
         private void Awake()
         {
@@ -17,7 +18,7 @@ namespace MyFirstARGame
             // but wrap around if we have more players than materials. This number was passed to us when the projectile was instantiated.
             // See ProjectileLauncher.cs for more details.
             var photonView = this.transform.GetComponent<PhotonView>();
-            var playerId = Mathf.Max((int)photonView.InstantiationData[0], 0);
+            playerId = Mathf.Max((int)photonView.InstantiationData[0], 0);
             if (this.projectileMaterials.Length > 0)
             {
                 var material = this.projectileMaterials[playerId % this.projectileMaterials.Length];

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: 03ad0547-e490-4b4e-9983-a9cff75a3ffd
+    AppIdRealtime: 7559fa23-a78c-4ce7-bd24-515be8bc31ef
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
@@ -42,6 +42,21 @@ MonoBehaviour:
   - ComputeOffset
   - SendOffset
   - UpdateScale
+  - RPC_addScore
+  - RPC_minusTime
+  - RPC_startTheGame
+  - RPC_cleanSceneFalse
+  - RPC_cleanSceneTrue
+  - RPC_resetScore
+  - RPC_restartTheGame
+  - RPC_setTime
+  - RPC_waitForRespond
+  - RPC_waitForRespondEnd
+  - RPC_noWinNoLose
+  - RPC_shooterLoseTrue
+  - RPC_shooterWinsTrue
+  - RPC_shootLargeSoccer
+  - RPC_shootLargeSoccerEnd
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

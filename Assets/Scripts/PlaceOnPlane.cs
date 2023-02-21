@@ -25,7 +25,9 @@ namespace MyFirstARGame
 
         private ARRaycastManager m_RaycastManager;
         private bool pressed;
+        private GameObject objToDelete;
 
+        
         /// <summary>
         /// The object instantiated as a result of a successful raycast intersection with a plane.
         /// </summary>
@@ -44,6 +46,8 @@ namespace MyFirstARGame
 
         private void Update()
         {
+            objToDelete = GameObject.Find("ObjectsToDelete");
+
             if (Pointer.current == null || this.pressed == false || !this.CanPlace)
                 return;
 
@@ -75,6 +79,7 @@ namespace MyFirstARGame
             if (this.SpawnedObject == null)
             {
                 this.SpawnedObject = PhotonNetwork.Instantiate(this.placedPrefab.name, position, rotation);
+                this.SpawnedObject.transform.parent = objToDelete.transform;
             }
             else
             {

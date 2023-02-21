@@ -38,6 +38,11 @@
             this.SetManipulateState(!this.isManipulating);
         }
 
+        public void ToggleSwitchStrongPressed()
+        {
+
+        }
+
         /// <summary>
         /// Checks whether <paramref name="point"/> is over any UI element.
         /// </summary>

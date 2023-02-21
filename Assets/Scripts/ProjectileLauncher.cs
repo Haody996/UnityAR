@@ -13,12 +13,38 @@
         private Rigidbody projectilePrefab;
 
         [SerializeField]
-        private float initialSpeed = 25;
+        private Rigidbody powerProjectilePrefab;
 
+        [SerializeField]
+        private float initialSpeed = 15;
+
+        [SerializeField]
+        private float powerInitialSpeed = 35;
+
+        private GameObject objToDelete;
+        private GameObject nm;
+        private NetworkCommunication nc;
+
+        private void Update()
+        {
+            objToDelete = GameObject.Find("ObjectsToDelete");
+            if (nm == null)
+            {
+                nm = GameObject.Find("NetworkManager(Clone)");
+                if (nm != null)
+                {
+                    nc = nm.GetComponent<NetworkCommunication>();
+                }
+            }
+        }
         protected override void OnPressBegan(Vector3 position)
         {
             if (this.projectilePrefab == null || !NetworkLauncher.Singleton.HasJoinedRoom)
                 return;
+						
+		    if (MyFirstARGame.global.isLargeSoccer){
+			    return;
+		    }
 
             // Ensure user is not doing anything else.
             var uiButtons = FindObjectOfType<UIButtons>();
@@ -27,12 +53,19 @@
 
             // We send our current player number as data so that the projectile can pick its material based on the player that owns it.
             var initialData = new object[] { PhotonNetwork.LocalPlayer.ActorNumber };
-
+            string projectileName = projectilePrefab.name;
+            if (nc != null)
+            {
+                if (nc.largeSoccer)
+                {
+                    projectileName = powerProjectilePrefab.name;
+                }
+            }
             // Cast a ray from the touch point to the world. We use the camera position as the origin and the ray direction as the
             // velocity direction.
             var ray = this.GetComponent<Camera>().ScreenPointToRay(position);
-            var projectile = PhotonNetwork.Instantiate(this.projectilePrefab.name, ray.origin, Quaternion.identity, data: initialData);
-
+            var projectile = PhotonNetwork.Instantiate(projectileName, ray.origin, Quaternion.identity, data: initialData);
+            projectile.transform.parent = objToDelete.transform;
             // By default, the projectile is kinematic in the prefab. This is because it should not be affected by physics
             // on clients other than the one owning it. Hence we disable kinematic mode and let the physics engine take over here.
             // It might make sense to have all game physics run on the server for a more complex scenario. You could transfer
